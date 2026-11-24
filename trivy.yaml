@@ -1,0 +1,12 @@
+# Fail closed on HIGH/CRITICAL vulnerabilities, including those without fixes.
+# See docs/security-policy.md before changing this gate.
+exit-code: 1
+format: table
+ignore-unfixed: false
+severity:
+  - HIGH
+  - CRITICAL
+scan:
+  scanners:
+    - vuln
+timeout: 5m

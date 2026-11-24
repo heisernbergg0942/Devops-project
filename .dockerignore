@@ -1,0 +1,12 @@
+# Allow only files required to install and run the application.
+**
+!package.json
+!package-lock.json
+!src/
+!src/**
+
+# Never include local credentials, including any placed inside src/.
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
