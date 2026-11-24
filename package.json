@@ -1,6 +1,6 @@
 {
   "name": "devops-practicum",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Node.js service for a GitFlow, Docker, and GitHub Actions DevOps practicum",
   "private": true,
   "main": "src/server.js",
