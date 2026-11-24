@@ -1,5 +1,7 @@
 FROM node:24-alpine
 
+LABEL org.opencontainers.image.source="https://github.com/heisernbergg0942/Devops-project"
+
 WORKDIR /app
 
 COPY package*.json ./
