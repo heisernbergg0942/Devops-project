@@ -1,3 +1,4 @@
+
 name: Continuous Integration
 
 on:
@@ -16,6 +17,9 @@ on:
 
 permissions:
   contents: read
+
+env:
+  IMAGE_NAME: ghcr.io/heisernbergg0942/devops-project
 
 jobs:
   build-and-test:
@@ -51,3 +55,50 @@ jobs:
       - name: Cleanup container
         if: always()
         run: docker rm -f devops-demo || true
+
+      - name: Export tested image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: docker save devops-demo:ci -o image.tar
+
+      - name: Upload tested image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tested-image
+          path: image.tar
+          retention-days: 1
+
+  publish:
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Download tested image
+        uses: actions/download-artifact@v4
+        with:
+          name: tested-image
+
+      - name: Load Docker image
+        run: docker load -i image.tar
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag Docker image
+        run: |
+          docker tag devops-demo:ci $IMAGE_NAME:latest
+          docker tag devops-demo:ci $IMAGE_NAME:$GITHUB_SHA
+
+      - name: Push Docker image
+        run: |
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:$GITHUB_SHA
