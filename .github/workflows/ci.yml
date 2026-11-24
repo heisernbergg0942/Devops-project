@@ -1,0 +1,51 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/**'
+      - 'release/**'
+      - 'hotfix/**'
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t devops-demo:ci .
+
+      - name: Run Docker container
+        run: |
+          docker run -d \
+            --name devops-demo \
+            -p 3000:3000 \
+            devops-demo:ci
+
+      - name: Test application
+        run: |
+          curl --fail --retry 10 \
+            --retry-connrefused \
+            --retry-delay 2 \
+            http://localhost:3000/
+
+      - name: Show container logs
+        if: always()
+        run: docker logs devops-demo || true
+
+      - name: Cleanup container
+        if: always()
+        run: docker rm -f devops-demo || true
