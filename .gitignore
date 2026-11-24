@@ -1,0 +1,30 @@
+# Dependencies and generated output
+node_modules/
+coverage/
+.nyc_output/
+dist/
+build/
+reports/
+.cache/
+trivy/
+
+# Local configuration and credentials (never commit secrets)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs and exported container images
+logs/
+*.log
+*.tar
+*.tar.sha256
+*.tgz
+
+# Editor and OS metadata
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*~

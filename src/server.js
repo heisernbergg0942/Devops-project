@@ -1,5 +1,5 @@
 const http = require("node:http");
-const { version } = require("./package.json");
+const { version } = require("../package.json");
 
 const server = http.createServer((req, res) => {
   res.setHeader("Content-Type", "application/json");

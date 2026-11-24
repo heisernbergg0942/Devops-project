@@ -1,11 +1,18 @@
 {
-  "name": "bash_lesson",
+  "name": "devops-practicum",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Node.js service for a GitFlow, Docker, and GitHub Actions DevOps practicum",
+  "private": true,
+  "main": "src/server.js",
   "scripts": {
-    "test": "node --test",
-    "start": "node server.js"
+    "check": "npm run lint",
+    "lint": "eslint . --max-warnings 0",
+    "test": "node --test test/*.test.js",
+    "test:smoke": "node scripts/ci/smoke-test.js",
+    "start": "node src/server.js"
+  },
+  "engines": {
+    "node": ">=24 <25"
   },
   "repository": {
     "type": "git",
@@ -18,5 +25,10 @@
   "bugs": {
     "url": "https://github.com/heisernbergg0942/Devops-project/issues"
   },
-  "homepage": "https://github.com/heisernbergg0942/Devops-project#readme"
+  "homepage": "https://github.com/heisernbergg0942/Devops-project#readme",
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.15.0",
+    "globals": "17.14.0"
+  }
 }
