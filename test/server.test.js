@@ -51,3 +51,15 @@ test("unknown routes return a JSON 404", async () => {
 test("the reusable container smoke check validates all routes", async () => {
   await smokeTest(baseUrl, 1);
 });
+
+test("unsupported HTTP methods return 405", async () => {
+  const response = await fetch(`${baseUrl}/health`, {
+    method: "POST"
+  });
+
+  assert.equal(response.status, 405);
+  assert.equal(response.headers.get("allow"), "GET");
+  assert.deepEqual(await response.json(), {
+    error: "Method not allowed"
+  });
+});
