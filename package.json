@@ -1,0 +1,22 @@
+{
+  "name": "bash_lesson",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heisernbergg0942/Devops-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/heisernbergg0942/Devops-project/issues"
+  },
+  "homepage": "https://github.com/heisernbergg0942/Devops-project#readme"
+}
